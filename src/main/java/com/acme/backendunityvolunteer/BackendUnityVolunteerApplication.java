@@ -2,10 +2,6 @@ package com.acme.backendunityvolunteer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.awt.*;
 import java.net.URI;
@@ -16,19 +12,20 @@ public class BackendUnityVolunteerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BackendUnityVolunteerApplication.class, args);
+
+        openSwaggerUI();
     }
 
-    @Configuration
-	public static class Myconfiguration{
-		@Bean
-		public WebMvcConfigurer corsConfigurer(){
-			return new WebMvcConfigurer() {
-				@Override
-				public void addCorsMappings(CorsRegistry registry) {
-					registry.addMapping("/**")
-							.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
-				}
-			};
-		}
-	}
+    private static void openSwaggerUI() {
+        try {
+            String swaggerUrl = "http://localhost:8080/swagger-ui/index.html";
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(new URI(swaggerUrl));
+            } else {
+                System.out.println("Desktop no soportado. Abre Swagger manualmente: " + swaggerUrl);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
