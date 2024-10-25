@@ -63,7 +63,7 @@ public class ActividadController {
         actividadDTO.setDescripcion(request.getDescripcion());
         actividadDTO.setNombre(request.getNombre());
         actividadDTO.setTipo(request.getTipo());
-
+        actividadDTO.setDescripcion(request.getDescripcion());
 
         ActividadDTO actividadGuardada = actividadService.registrarActividad(actividadDTO);
 
@@ -80,6 +80,7 @@ public class ActividadController {
         actividadDTO.setDescripcion(request.getDescripcion());
         actividadDTO.setNombre(request.getNombre());
         actividadDTO.setTipo(request.getTipo());
+        actividadDTO.setDescripcion(request.getDescripcion());
         actividadService.actualizarActividad(actividadDTO);
         return ResponseEntity.noContent().build();
     }
