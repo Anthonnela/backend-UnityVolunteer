@@ -60,6 +60,7 @@ public class ActividadController {
         // Crear y guardar la actividad
         ActividadDTO actividadDTO = new ActividadDTO();
         actividadDTO.setDuracion(request.getDuracion());
+        actividadDTO.setDescripcion(request.getDescripcion());
         actividadDTO.setNombre(request.getNombre());
         actividadDTO.setTipo(request.getTipo());
 
@@ -76,6 +77,7 @@ public class ActividadController {
         ActividadDTO actividadDTO = new ActividadDTO();
         actividadDTO.setId(id);
         actividadDTO.setDuracion(request.getDuracion());
+        actividadDTO.setDescripcion(request.getDescripcion());
         actividadDTO.setNombre(request.getNombre());
         actividadDTO.setTipo(request.getTipo());
         actividadService.actualizarActividad(actividadDTO);

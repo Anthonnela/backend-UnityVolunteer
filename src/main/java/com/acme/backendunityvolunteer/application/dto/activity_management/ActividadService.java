@@ -17,6 +17,7 @@ public class ActividadService {
         Actividad nuevaActividad = new Actividad();
         nuevaActividad.setDuracion(actividadDTO.getDuracion());
         nuevaActividad.setNombre(actividadDTO.getNombre());
+        nuevaActividad.setDescripcion(actividadDTO.getDescripcion());
         nuevaActividad.setTipo(actividadDTO.getTipo());
 
         Actividad actividadGuardada = actividadRepository.save(nuevaActividad);
@@ -38,6 +39,7 @@ public class ActividadService {
 
         actividadExistente.setDuracion(actividadDTO.getDuracion());
         actividadExistente.setNombre(actividadDTO.getNombre());
+        actividadExistente.setDescripcion(actividadDTO.getDescripcion());
         actividadExistente.setTipo(actividadDTO.getTipo());
 
         actividadRepository.save(actividadExistente);
@@ -53,6 +55,7 @@ public class ActividadService {
         ActividadDTO dto = new ActividadDTO();
         dto.setId(actividad.getId());
         dto.setNombre(actividad.getNombre());
+        dto.setDescripcion(actividad.getDescripcion());
         dto.setDuracion(actividad.getDuracion());
         dto.setTipo(actividad.getTipo());
 
