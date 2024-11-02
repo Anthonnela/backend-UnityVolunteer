@@ -1,8 +1,6 @@
 package com.acme.backendunityvolunteer.infraestructure.rest.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +10,7 @@ public class ActividadRequest {
     @NotNull(message = "El nombre no puede estar vacío")
     private String nombre;
 
-    @NotNull(message = "La descripción no puede estar vacío")
+    @NotNull(message = "La descripción no puede estar vacía")
     private String descripcion;
 
     @NotNull(message = "El tipo no puede estar vacío")
