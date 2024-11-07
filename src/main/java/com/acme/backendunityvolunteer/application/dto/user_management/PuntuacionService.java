@@ -1,5 +1,6 @@
 package com.acme.backendunityvolunteer.application.dto.user_management;
 
+import com.acme.backendunityvolunteer.application.dto.PuntuacionDTO;
 import com.acme.backendunityvolunteer.domain.model.PerfilVoluntario;
 import com.acme.backendunityvolunteer.domain.model.Puntuacion;
 import com.acme.backendunityvolunteer.domain.model.repository.ActividadRepository;
@@ -23,28 +24,40 @@ public class PuntuacionService {
     @Autowired
     private ActividadRepository actividadRepository;
 
-    public Puntuacion addPuntuacion(Long voluntarioId, Long actividadId, int calificacion, String comentario) {
-        Puntuacion puntuacion = new Puntuacion();
-        PerfilVoluntario voluntario = voluntarioRepository.findById(voluntarioId).orElseThrow();
+    public PuntuacionDTO addPuntuacion(PuntuacionDTO puntuacionDTO) {
+        Puntuacion newPuntuacion = new Puntuacion();
+        PerfilVoluntario voluntario = voluntarioRepository.findById(puntuacionDTO.getVoluntarioId()).orElseThrow();
 
-        puntuacion.setVoluntario(voluntario);
-        puntuacion.setActividad(actividadRepository.findById(actividadId).orElseThrow());
-        puntuacion.setCalificacion(calificacion);
-        puntuacion.setComentario(comentario);
-        puntuacion.setFecha(LocalDate.now());
+        newPuntuacion.setVoluntarioId(voluntario);
+        newPuntuacion.setActividadId(actividadRepository.findById(puntuacionDTO.getActividadId()).orElseThrow());
+        newPuntuacion.setCalificacion(puntuacionDTO.getCalificacion());
+        newPuntuacion.setComentario(puntuacionDTO.getComentario());
+        newPuntuacion.setFecha(puntuacionDTO.getFecha());
 
-        Puntuacion savedPuntuacion = puntuacionRepository.save(puntuacion);
+        Puntuacion savedPuntuacion = puntuacionRepository.save(newPuntuacion);
 
         // Update average score
         updateVoluntarioPuntuacionPromedio(voluntario);
 
-        return savedPuntuacion;
+        return maptoDTO(savedPuntuacion);
     }
 
     private void updateVoluntarioPuntuacionPromedio(PerfilVoluntario voluntario) {
-        List<Puntuacion> puntuaciones = puntuacionRepository.findByVoluntario(voluntario);
+        List<Puntuacion> puntuaciones = puntuacionRepository.findByVoluntarioId(voluntario);
         double average = puntuaciones.stream().mapToInt(Puntuacion::getCalificacion).average().orElse(0.0);
         voluntario.setPuntuacionPromedio(average);
         voluntarioRepository.save(voluntario);
     }
+
+    private PuntuacionDTO maptoDTO(Puntuacion puntuacion) {
+        PuntuacionDTO puntuacionDTO = new PuntuacionDTO();
+        puntuacionDTO.setId(puntuacion.getId());
+        puntuacionDTO.setVoluntarioId(puntuacion.getVoluntarioId().getId());
+        puntuacionDTO.setActividadId(puntuacion.getActividadId().getId());
+        puntuacionDTO.setCalificacion(puntuacion.getCalificacion());
+        puntuacionDTO.setComentario(puntuacion.getComentario());
+        puntuacionDTO.setFecha(puntuacion.getFecha());
+        return puntuacionDTO;
+    }
+
 }

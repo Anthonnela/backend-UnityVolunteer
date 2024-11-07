@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PuntuacionRepository extends JpaRepository<Puntuacion, Long> {
-    List<Puntuacion> findByVoluntario(PerfilVoluntario voluntario);
+    List<Puntuacion> findByVoluntarioId(PerfilVoluntario voluntarioId);
 }

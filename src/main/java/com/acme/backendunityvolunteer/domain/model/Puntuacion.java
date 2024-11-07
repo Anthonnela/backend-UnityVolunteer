@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -14,15 +14,15 @@ public class Puntuacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPuntuacion;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_voluntario", nullable = false)
-    private PerfilVoluntario voluntario;
+    private PerfilVoluntario voluntarioId;
 
     @ManyToOne
     @JoinColumn(name = "id_actividad", nullable = false)
-    private Actividad actividad;
+    private Actividad actividadId;
 
     @Column(nullable = false)
     private int calificacion;
@@ -31,5 +31,5 @@ public class Puntuacion {
     private String comentario;
 
     @Column(nullable = false)
-    private LocalDate fecha;
+    private Date fecha;
 }
